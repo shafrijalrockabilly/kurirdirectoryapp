@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">KurirDirectoryApp</string>
+    <string name="title_direktori_kurir">Direktori Kurir</string>
+    <string name="subtitle_direktori">Temukan informasi kontak &amp; afiliasi kurir logistik</string>
+    <string name="hint_cari">Cari nama atau perusahaan&#8230;</string>
+    <string name="empty_state_title">Kurir Tidak Ditemukan</string>
+    <string name="empty_state_text">Tidak ada kurir yang cocok dengan pencarian Anda</string>
+    <string name="error_state_title">Koneksi Terganggu</string>
+    <string name="btn_coba_lagi">Coba Lagi</string>
+    <string name="loading_text">Memuat data kurir&#8230;</string>
+    <string name="format_jumlah_kurir">Menampilkan %1$d kurir</string>
+</resources>

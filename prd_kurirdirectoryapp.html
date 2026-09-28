@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PRD — KurirDirectoryApp</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --muted: #475569;
+    --accent: #0d9488;
+    --accent-soft: #ccfbf1;
+    --border: #e2e8f0;
+    --code-bg: #0f172a;
+    --code-text: #e2e8f0;
+    --warn-bg: #fef3c7;
+    --warn-border: #f59e0b;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b1220;
+      --surface: #131c2e;
+      --text: #e6edf3;
+      --muted: #93a3b8;
+      --accent: #2dd4bf;
+      --accent-soft: #10312e;
+      --border: #223049;
+      --code-bg: #0a0f1a;
+      --code-text: #cbd5e1;
+      --warn-bg: #3a2f10;
+      --warn-border: #d97706;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b1220;
+    --surface: #131c2e;
+    --text: #e6edf3;
+    --muted: #93a3b8;
+    --accent: #2dd4bf;
+    --accent-soft: #10312e;
+    --border: #223049;
+    --code-bg: #0a0f1a;
+    --code-text: #cbd5e1;
+    --warn-bg: #3a2f10;
+    --warn-border: #d97706;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif, Arial;
+    margin: 0;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+  header.hero {
+    background: linear-gradient(135deg, var(--accent) 0%, #0f172a 120%);
+    color: #f0fdfa;
+    border-radius: 14px;
+    padding: 28px 24px;
+    margin-bottom: 28px;
+  }
+  header.hero .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  header.hero h1 { margin: 4px 0 8px; font-size: 26px; }
+  header.hero p { margin: 0; opacity: 0.9; font-size: 14px; }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .meta-grid div {
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  .meta-grid strong { display: block; font-size: 13px; margin-bottom: 2px; }
+  section { margin-bottom: 30px; }
+  h2 {
+    font-size: 19px;
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+    margin-bottom: 14px;
+  }
+  h3 { font-size: 15px; color: var(--accent); margin: 18px 0 6px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .overflow { overflow-x: auto; }
+  ul { margin: 6px 0; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  code { background: var(--code-bg); color: var(--code-text); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; }
+  .pill { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-weight: 600; margin-left: 6px; }
+  .warn {
+    background: var(--warn-bg);
+    border-left: 4px solid var(--warn-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin: 12px 0;
+  }
+  .muted { color: var(--muted); font-size: 13px; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="tag">Product Requirements Document</span>
+  <h1>KurirDirectoryApp</h1>
+  <p>Aplikasi Android direktori kurir/pengguna berbasis konsumsi RESTful GET API publik, RecyclerView, dan live search.</p>
+  <div class="meta-grid">
+    <div><strong>Owner</strong>Engineering Manager</div>
+    <div><strong>Status</strong>Draft — Siap Dikerjakan</div>
+    <div><strong>Platform</strong>Android (Kotlin)</div>
+    <div><strong>Min SDK</strong>API 24 (Nougat)</div>
+    <div><strong>Sumber</strong>Modul Praktikum P10</div>
+  </div>
+</header>
+
+<section>
+  <h2>1. Latar Belakang & Tujuan Produk</h2>
+  <div class="card">
+    <p>KurirDirectoryApp adalah aplikasi latihan tingkat dasar yang mendemonstrasikan alur end-to-end konsumsi RESTful API publik (JSONPlaceholder <code>/users</code>) ke dalam antarmuka Android modern menggunakan Retrofit 2, Gson, Kotlin Coroutines, dan RecyclerView. Tujuan bisnis dari sudut pandang pembelajaran: membangun kompetensi dasar networking + list rendering + filtering yang menjadi fondasi hampir semua aplikasi data-driven di industri.</p>
+    <p class="muted">Goal produk: pengguna dapat membuka aplikasi, langsung melihat daftar kurir/pengguna, dan mencari nama secara instan tanpa lag atau request tambahan ke server.</p>
+  </div>
+</section>
+
+<section>
+  <h2>2. Target Pengguna & Persona</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Pengguna akhir (dalam simulasi):</strong> staf admin logistik yang perlu mencari data kurir dengan cepat.</li>
+      <li><strong>Mahasiswa/Developer:</strong> pengerja tugas yang perlu mengimplementasikan dan mengevaluasi kode sesuai modul serta menyelesaikan 2 tugas mandiri.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>3. Ruang Lingkup (Scope)</h2>
+  <div class="overflow card">
+    <table>
+      <tr><th>In-Scope</th><th>Out-of-Scope</th></tr>
+      <tr>
+        <td>
+          <ul>
+            <li>GET list user dari <code>jsonplaceholder.typicode.com/users</code></li>
+            <li>Tampilan RecyclerView + CardView per item</li>
+            <li>Live search in-memory berbasis nama</li>
+            <li>Loading state & error state jaringan</li>
+            <li>Filter ganda (nama ATAU perusahaan)</li>
+            <li>Empty state ketika hasil pencarian kosong</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li>Autentikasi / login</li>
+            <li>CRUD (create/update/delete) data user</li>
+            <li>Local database / caching offline (Room)</li>
+            <li>Pagination / infinite scroll</li>
+            <li>Dark mode UI kustom</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>4. User Stories & Kriteria Penerimaan</h2>
+
+  <div class="card">
+    <h3>US-01 — Pemuatan Data Otomatis</h3>
+    <p><em>Sebagai pengguna, saya ingin daftar kurir langsung tampil saat aplikasi dibuka</em>, agar saya tidak perlu aksi tambahan.</p>
+    <ul>
+      <li>Given aplikasi baru dibuka, When proses fetch API berjalan, Then <code>ProgressBar</code> tampil.</li>
+      <li>Given request berhasil (HTTP 200), When data diterima, Then 10 kartu user tampil rapi di RecyclerView dan ProgressBar hilang.</li>
+      <li>Given request gagal / tidak ada koneksi, When error terjadi, Then pesan galat tampil di <code>textViewErrorMessage</code>, bukan crash.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>US-02 — Pencarian Nama Real-Time</h3>
+    <p><em>Sebagai pengguna, saya ingin mengetik nama dan melihat list menyusut seketika</em>, agar pencarian terasa instan.</p>
+    <ul>
+      <li>Given daftar penuh sudah dimuat, When user mengetik "ervin", Then hanya kartu dengan nama mengandung "ervin" (case-insensitive) yang tampil.</li>
+      <li>Given kolom pencarian dikosongkan, When teks dihapus semua, Then seluruh 10 data tampil kembali.</li>
+      <li>Filtering harus in-memory (tanpa request API baru) — respons instan, tanpa jeda loading.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>US-03 — Filter Ganda: Nama ATAU Perusahaan <span class="pill">Tugas 1</span></h3>
+    <p><em>Sebagai pengguna, saya ingin pencarian juga mencocokkan nama perusahaan</em>, agar saya bisa mencari lewat afiliasi kurir.</p>
+    <ul>
+      <li>Given kata kunci "Crona", When difilter, Then user dengan <code>company.companyName</code> mengandung "Crona" ikut tampil meski namanya tidak cocok.</li>
+      <li>Logika filter: <code>pengguna.name.contains(kataKunci, true) || pengguna.company.companyName.contains(kataKunci, true)</code>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>US-04 — Empty State Pencarian <span class="pill">Tugas 2</span></h3>
+    <p><em>Sebagai pengguna, saya ingin diberi tahu jika pencarian tidak menemukan hasil</em>, agar saya tahu itu bukan bug.</p>
+    <ul>
+      <li>Given kata kunci "Zulkifli" tidak cocok dengan data manapun, When filter dijalankan, Then RecyclerView kosong dan TextView "Tidak ada kurir yang cocok dengan pencarian Anda" tampil di tengah layar.</li>
+      <li>Given hasil filter kembali ada isinya, When user mengubah kata kunci, Then TextView empty-state otomatis disembunyikan lagi.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>5. Spesifikasi Fungsional</h2>
+  <div class="overflow card">
+    <table>
+      <tr><th>ID</th><th>Requirement</th><th>Prioritas</th></tr>
+      <tr><td>F-01</td><td>Integrasi Retrofit 2 + Gson Converter ke endpoint <code>GET /users</code></td><td>Must</td></tr>
+      <tr><td>F-02</td><td>Model data <code>UserResponse</code> & <code>CompanyInfo</code> dengan <code>@SerializedName</code></td><td>Must</td></tr>
+      <tr><td>F-03</td><td>RecyclerView + Adapter menampilkan nama, perusahaan, email, telepon</td><td>Must</td></tr>
+      <tr><td>F-04</td><td>TextWatcher pada <code>editTextSearchName</code> memicu filter on-type</td><td>Must</td></tr>
+      <tr><td>F-05</td><td>Filter gabungan nama + nama perusahaan (case-insensitive, contains)</td><td>Should</td></tr>
+      <tr><td>F-06</td><td>Empty-state view saat hasil filter = 0 item</td><td>Should</td></tr>
+      <tr><td>F-07</td><td>Loading indicator saat fetch awal; disembunyikan setelah selesai</td><td>Must</td></tr>
+      <tr><td>F-08</td><td>Pesan error yang informatif saat gagal koneksi / HTTP non-2xx</td><td>Must</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>6. Spesifikasi Non-Fungsional</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Performa:</strong> filtering in-memory harus terasa instan (&lt;16ms per ketikan, tanpa jank), tidak melakukan request API tambahan saat mengetik.</li>
+      <li><strong>Reliabilitas:</strong> semua exception jaringan ditangkap (try/catch) agar aplikasi tidak crash saat offline.</li>
+      <li><strong>Threading:</strong> panggilan API dijalankan di <code>Dispatchers.IO</code> via <code>lifecycleScope</code>, update UI kembali di <code>Dispatchers.Main</code>.</li>
+      <li><strong>Kompatibilitas:</strong> minimum API 24 (Android 7.0), diuji di emulator dan/atau perangkat fisik.</li>
+      <li><strong>Keamanan dasar:</strong> izin <code>INTERNET</code> & <code>ACCESS_NETWORK_STATE</code> di <code>AndroidManifest.xml</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>7. Arsitektur & Desain Teknis</h2>
+  <div class="card">
+    <h3>Struktur Proyek</h3>
+    <ul>
+      <li><code>package com.latihan.kurirdirectoryapp</code></li>
+      <li><code>UserResponse.kt</code> — model data (+ <code>CompanyInfo</code> nested)</li>
+      <li><code>ApiService.kt</code> — interface Retrofit, <code>suspend fun getAllUsers()</code></li>
+      <li><code>ApiClient.kt</code> — singleton <code>object</code> pembangun instance Retrofit + Gson</li>
+      <li><code>UserAdapter.kt</code> — <code>RecyclerView.Adapter</code>, method <code>perbaruiDaftar()</code></li>
+      <li><code>MainActivity.kt</code> — orkestrasi fetch, binding, TextWatcher</li>
+    </ul>
+    <h3>Alur Data</h3>
+    <p class="muted">MainActivity → ApiClient.apiService.getAllUsers() (Coroutine, IO) → Response&lt;List&lt;UserResponse&gt;&gt; → withContext(Main) → daftarPenggunaAsli (source of truth) → UserAdapter.perbaruiDaftar() → RecyclerView re-render. Saat mengetik: TextWatcher → filter lokal pada <code>daftarPenggunaAsli</code> → hasil dikirim ke adapter, tanpa menyentuh jaringan lagi.</p>
+    <h3>Dependensi Utama</h3>
+    <ul>
+      <li><code>com.squareup.retrofit2:retrofit:2.11.0</code></li>
+      <li><code>com.squareup.retrofit2:converter-gson:2.11.0</code></li>
+      <li><code>androidx.recyclerview:recyclerview:1.3.2</code>, <code>androidx.cardview:cardview:1.0.0</code></li>
+      <li><code>org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0</code></li>
+      <li><code>androidx.lifecycle:lifecycle-runtime-ktx:2.8.4</code></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>8. Kontrak Data (API)</h2>
+  <div class="overflow card">
+    <table>
+      <tr><th>Field JSON</th><th>Tipe</th><th>Mapping Kotlin</th></tr>
+      <tr><td>id</td><td>Int</td><td><code>UserResponse.id</code></td></tr>
+      <tr><td>name</td><td>String</td><td><code>UserResponse.name</code></td></tr>
+      <tr><td>username</td><td>String</td><td><code>UserResponse.username</code></td></tr>
+      <tr><td>email</td><td>String</td><td><code>UserResponse.email</code></td></tr>
+      <tr><td>phone</td><td>String</td><td><code>UserResponse.phone</code></td></tr>
+      <tr><td>company.name</td><td>String</td><td><code>CompanyInfo.companyName</code></td></tr>
+    </table>
+  </div>
+  <div class="warn">Endpoint <code>/users</code> mengembalikan <strong>array</strong> (bukan objek tunggal) → tipe balikan Retrofit wajib <code>Response&lt;List&lt;UserResponse&gt;&gt;</code>, bukan <code>Response&lt;UserResponse&gt;</code>.</div>
+</section>
+
+<section>
+  <h2>9. Skenario Pengujian (QA)</h2>
+  <div class="overflow card">
+    <table>
+      <tr><th>#</th><th>Skenario</th><th>Hasil Diharapkan</th></tr>
+      <tr><td>1</td><td>Buka aplikasi pertama kali</td><td>ProgressBar tampil sejenak → 10 kartu user terpasang rapi</td></tr>
+      <tr><td>2</td><td>Ketik "ervin"</td><td>List menyusut, hanya "Ervin Howell" tampil</td></tr>
+      <tr><td>3</td><td>Hapus semua teks pencarian</td><td>Seluruh 10 data tampil kembali</td></tr>
+      <tr><td>4</td><td>Ketik "Crona" (nama perusahaan)</td><td>User dari perusahaan "Romaguera-Crona" ikut tampil</td></tr>
+      <tr><td>5</td><td>Ketik "Zulkifli" (tidak ada data cocok)</td><td>List kosong + pesan empty-state tampil</td></tr>
+      <tr><td>6</td><td>Matikan koneksi internet lalu buka aplikasi</td><td>Pesan error koneksi tampil, aplikasi tidak crash</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>10. Risiko & Mitigasi</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Ketergantungan pada API publik pihak ketiga</strong> — jika JSONPlaceholder down, aplikasi hanya menampilkan error state (tidak ada fallback data lokal). Mitigasi: tangani secara eksplisit dengan pesan error yang jelas (sudah tercakup di F-08).</li>
+      <li><strong>notifyDataSetChanged() kurang efisien</strong> untuk skala besar — dapat diganti <code>DiffUtil</code> di iterasi berikutnya, namun untuk 10 data ini bukan prioritas.</li>
+      <li><strong>Tidak ada caching offline</strong> — di luar scope versi ini; dicatat sebagai backlog.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>11. Backlog / Peningkatan Selanjutnya (Out of Scope Saat Ini)</h2>
+  <div class="card">
+    <ul>
+      <li>Migrasi filtering ke <code>DiffUtil</code> agar animasi list lebih halus.</li>
+      <li>Debounce pada TextWatcher (mis. 250ms) untuk dataset besar.</li>
+      <li>Caching lokal dengan Room untuk mode offline.</li>
+      <li>Migrasi ke ViewBinding/Jetpack Compose.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>12. Definition of Done</h2>
+  <div class="card">
+    <ul>
+      <li>Seluruh langkah 3.1–3.10 pada modul diimplementasikan dan berjalan tanpa crash.</li>
+      <li>Tugas 1 (filter ganda nama/perusahaan) dan Tugas 2 (empty state) terintegrasi dan lulus 6 skenario QA di atas.</li>
+      <li>Kode mengikuti struktur package <code>com.latihan.kurirdirectoryapp</code> dan penamaan sesuai modul.</li>
+      <li>Build Gradle sukses sync tanpa error, aplikasi teruji di emulator API 24+.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>PRD ini disusun berdasarkan Modul Praktikum Dasar (Level 1) — Pertemuan 10.</footer>
+</div>
+</body>
+</html>
